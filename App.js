@@ -17,6 +17,10 @@ function reducer(state = initialState, action) {
             return {
                 action: "openMenu"
             }
+        case "UPDATE_NAME":
+            return {
+                name: action.name
+            }
         default:
             return state;
     }

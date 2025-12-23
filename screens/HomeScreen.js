@@ -13,7 +13,7 @@ import Avatar from "../components/Avatar";
 
 function mapStateToProps(state) {
     return {
-        action: state.action
+        action: state.action, name: state.name
     }
 }
 
@@ -95,7 +95,7 @@ class HomeScreen extends React.Component {
                                 </TouchableOpacity>
 
                                 <Title>Welcome back,</Title>
-                                <Name>Edson</Name>
+                                <Name>{this.props.name}</Name>
                                 <NotificationIcon
                                     style={{
                                         position: 'absolute',
