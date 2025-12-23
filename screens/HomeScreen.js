@@ -79,7 +79,6 @@ class HomeScreen extends React.Component {
             <RootView>
                 <Menu />
                 <AnimatedContainer style={{ transform: [{ scale: this.state.scale }], opacity: this.state.opacity }}>
-                    <Menu />
                     <SafeAreaView>
                         <ScrollView style={{ height: "100%" }}>
                             <TitleBar>

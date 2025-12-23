@@ -1,7 +1,7 @@
 import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-import HomeScreen from './screens/HomeScreen';
+import AppNavigator from './navigator/AppNavigator';
 
 const initialState = {
     action: "openMenu"
@@ -32,7 +32,7 @@ const store = configureStore({
 
 const App = () => (
     <Provider store={store}>
-        <HomeScreen />
+        <AppNavigator />
     </Provider>
 );
 
