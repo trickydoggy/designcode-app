@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 class Avatar extends React.Component {
     state = {
-        photo: "https://drive.google.com/file/d/1qOeKxmhRfW2sArtUsNluqbNKloziX9K-/view?usp=sharing"
+        photo: "https://cl.ly/55da82beb939/download/avatar-default.jpg"
     }
 
     componentDidMount() {
