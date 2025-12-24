@@ -14,7 +14,7 @@ function mapDispatchToProps(dispatch) {
             dispatch({
                 type: "UPDATE_NAME",
                 name: name
-            }),
+            })
     }
 }
 
@@ -26,17 +26,13 @@ class Avatar extends React.Component {
     }
 
     componentDidMount() {
-        fetch("https://uifaces.co/api?limit=1&random=true", {
-            headers: new Headers({
-                "X-Api-Key": "eeaafbe81657073cd70ac6e3de1bd6"
-            })
-        })
+        fetch("https://randomuser.me/api/")
             .then(response => response.json())
             .then(response => {
                 this.setState({
-                    photo: response[0].photo
+                    photo: response.results[0].picture.thumbnail
                 });
-                this.props.updateName(response[0].name);
+                this.props.updateName(response.results[0].name.first);
             });
     }
 
