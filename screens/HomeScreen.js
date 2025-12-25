@@ -11,6 +11,7 @@ import Menu from "../components/Menu";
 import { connect } from "react-redux";
 import Avatar from "../components/Avatar";
 
+
 function mapStateToProps(state) {
     return {
         action: state.action, name: state.name
@@ -127,7 +128,7 @@ class HomeScreen extends React.Component {
 
                             <ScrollView horizontal={true} style={{ paddingBottom: 30 }} showsHorizontalScrollIndicator={false}>
                                 {cards.map((card, index) => (
-                                    <TouchableOpacity key={index} onPress={() => this.props.navigation.push("Section")}>
+                                    <TouchableOpacity key={index} onPress={() => this.props.navigation.push("Section", { section: card })}>
                                         <Card
                                             title={card.title}
                                             image={card.image}
