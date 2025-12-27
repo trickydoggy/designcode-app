@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 import { Animated, TouchableOpacity, Dimensions } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from '@expo/vector-icons/Ionicons';
 import MenuItem from "./MenuItem";
 import { connect } from "react-redux";
 

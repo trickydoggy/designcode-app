@@ -1,10 +1,15 @@
 import React from "react";
 import styled from "styled-components/native";
-import { TouchableOpacity, StatusBar } from "react-native";
-import { WebView, Linking } from "react-native-webview";
+import { TouchableOpacity, StatusBar, Linking } from "react-native";
+import { WebView } from "react-native-webview";
 import Ionicons from '@expo/vector-icons/Ionicons'
 
 class SectionScreen extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.webviewRef = React.createRef();
+    }
 
     static navigationOptions = {
         header: null
@@ -43,11 +48,12 @@ class SectionScreen extends React.Component {
                     <WebView source={{ html: htmlContent + htmlStyle }}
                         scalesPageToFit={false}
                         scrollEnabled={false}
+                        ref={this.webviewRef}
                         onNavigationStateChange={event => {
                             console.log(event.url);
 
                             if (event.url != "about:blank") {
-                                this.refs.webview.stopLoading();
+                                this.webviewRef.current.stopLoading();
                                 Linking.openURL(event.url);
                             }
                         }}

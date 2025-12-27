@@ -10,7 +10,40 @@ import Course from "../components/Course";
 import Menu from "../components/Menu";
 import { connect } from "react-redux";
 import Avatar from "../components/Avatar";
+import { useQuery, gql } from "@apollo/client";
 
+
+const CardsQuery = gql`
+            {
+  cardsCollection {
+    items {
+      title
+      subtitle
+      image {
+        title
+        description
+        contentType
+        fileName
+        size
+        url
+        width
+        height
+      }
+      caption
+      logo {
+        title
+        description
+        contentType
+        fileName
+        size
+        url
+        width
+        height
+      }
+    }
+  }  
+}
+`;
 
 function mapStateToProps(state) {
     return {
@@ -27,6 +60,38 @@ function mapDispatchToProps(dispatch) {
         openMenu: () => dispatch({ type: "openMenu" })
     }
 }
+
+// Functional component to handle GraphQL query with hooks
+const CardsSection = ({ navigation }) => {
+    const { loading, error, data } = useQuery(CardsQuery);
+
+    if (loading) return <Message>Loading...</Message>;
+    if (error) return <Message>Error... {error.message}</Message>;
+
+    console.log(data.cardsCollection.items);
+
+    return (
+        <CardsContainer>
+            {data.cardsCollection.items.map((card, index) => (
+                <TouchableOpacity
+                    key={index}
+                    onPress={() => {
+                        navigation.push("Section", {
+                            section: card
+                        });
+                    }}>
+                    <Card
+                        title={card.title}
+                        image={card.image}
+                        caption={card.caption}
+                        logo={card.logo}
+                        subtitle={card.subtitle}
+                    />
+                </TouchableOpacity>
+            ))}
+        </CardsContainer>
+    );
+};
 
 
 class HomeScreen extends React.Component {
@@ -127,18 +192,7 @@ class HomeScreen extends React.Component {
                             <Subtitle>Continue Learning</Subtitle>
 
                             <ScrollView horizontal={true} style={{ paddingBottom: 30 }} showsHorizontalScrollIndicator={false}>
-                                {cards.map((card, index) => (
-                                    <TouchableOpacity key={index} onPress={() => this.props.navigation.push("Section", { section: card })}>
-                                        <Card
-                                            title={card.title}
-                                            image={card.image}
-                                            caption={card.caption}
-                                            logo={card.logo}
-                                            subtitle={card.subtitle}
-                                        />
-                                    </TouchableOpacity>
-                                ))}
-
+                                <CardsSection navigation={this.props.navigation} />
                             </ScrollView>
                             <Subtitle>Popular Courses</Subtitle>
 
@@ -163,6 +217,19 @@ class HomeScreen extends React.Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+
+
+const Message = styled.Text`
+   margin: 20px;
+   color: #b8bece;
+   font-size: 15px;
+   font-weight: 500;
+`;
+
+const CardsContainer = styled.View`
+    
+`;
+
 
 const RootView = styled.View`
     flex: 1;
