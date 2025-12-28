@@ -40,6 +40,7 @@ const CardsQuery = gql`
         width
         height
       }
+        content
     }
   }  
 }
@@ -86,6 +87,7 @@ const CardsSection = ({ navigation }) => {
                         caption={card.caption}
                         logo={card.logo}
                         subtitle={card.subtitle}
+                        content={card.content}
                     />
                 </TouchableOpacity>
             ))}

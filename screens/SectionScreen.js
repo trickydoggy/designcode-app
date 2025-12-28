@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components/native";
-import { TouchableOpacity, StatusBar, Linking } from "react-native";
+import { TouchableOpacity, StatusBar, Linking, ScrollView } from "react-native";
 import { WebView } from "react-native-webview";
 import Ionicons from '@expo/vector-icons/Ionicons'
+import Markdown from 'react-native-showdown'
+
 
 class SectionScreen extends React.Component {
 
@@ -28,24 +30,26 @@ class SectionScreen extends React.Component {
         const section = route.params.section;
 
         return (
-            <Container>
-                <StatusBar hidden />
-                <Cover>
-                    <Image source={section.image} />
-                    <Wrapper>
-                        <Logo source={section.logo} />
-                        <SubTitle>{section.subtitle}</SubTitle>
-                    </Wrapper>
-                    <Title>{section.title}</Title>
-                    <Caption>{section.caption}</Caption>
-                </Cover>
-                <TouchableOpacity style={{ position: 'absolute', top: 20, right: 20 }} onPress={() => navigation.goBack()}>
-                    <CloseView>
-                        <Ionicons name="close-outline" size={36} color="blue" style={{ marginTop: -2, marginLeft: -2 }} />
-                    </CloseView>
-                </TouchableOpacity>
-                <Content>
-                    <WebView source={{ html: htmlContent + htmlStyle }}
+            <ScrollView>
+                <Container>
+                    <StatusBar hidden />
+                    <Cover>
+                        <Image source={section.image} />
+                        <Wrapper>
+                            <Logo source={section.logo} />
+                            <SubTitle>{section.subtitle}</SubTitle>
+                        </Wrapper>
+                        <Title>{section.title}</Title>
+                        <Caption>{section.caption}</Caption>
+                    </Cover>
+                    <TouchableOpacity style={{ position: 'absolute', top: 20, right: 20 }} onPress={() => navigation.goBack()}>
+                        <CloseView>
+                            <Ionicons name="close-outline" size={36} color="blue" style={{ marginTop: -2, marginLeft: -2 }} />
+                        </CloseView>
+                    </TouchableOpacity>
+                    <Content>
+                        {/*
+                    <WebView source={{ html: section.content + htmlStyle }}
                         scalesPageToFit={false}
                         scrollEnabled={false}
                         ref={this.webviewRef}
@@ -58,9 +62,14 @@ class SectionScreen extends React.Component {
                             }
                         }}
 
-                    />
-                </Content>
-            </Container>
+                    /> */}
+                        <Markdown
+                            markdown={section.content}
+                            css={htmlStyle}
+                        />
+                    </Content>
+                </Container>
+            </ScrollView>
         );
     }
 }
@@ -68,35 +77,44 @@ class SectionScreen extends React.Component {
 export default SectionScreen;
 
 
-const htmlContent = `
- <h2>This is a title</h2>
- <p>This <strong>is</strong> a <a href="http://designcode.io">link</a></p>
- <img src="https://cl.ly/8861f359ed6d/download/Wave14.jpg" />
-`;
-
-
 const htmlStyle = `
-    <style>
-        * {
-            font-family: -apple-system, Roboto;
-            margin: 0;
-            padding: 0;
-        }
-        img {
-            width: 100%;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-    </style>        
+    * {
+        font-family: -apple-system, Roboto;
+        margin: 0;
+        padding: 0;
+        font-size: 17px;
+        font-weight: normal;
+        color: #3c4560;
+        line-height: 24px;
+    }
+    img {
+        width: 100%;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    pre {
+        background: #212c4f;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+        overflow: hidden;
+        word-wrap: break-word;
+    }
+    code {
+       color: white;
+    }
+
 `;
 
 const Content = styled.View`
-    height: 100%;
+    height: 1000px;
     padding: 20px;
 `
 
 const Container = styled.View`
     flex: 1;
+    background: white;
 `
 
 const Cover = styled.View`
